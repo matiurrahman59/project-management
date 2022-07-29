@@ -1,0 +1,71 @@
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useAuthContext } from '../../hooks/useAuthContext';
+// custom hooks
+import { useLogin } from '../../hooks/useLogin';
+
+// styles
+import './Login.css';
+
+export default function Login() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const { login, error, isPending } = useLogin();
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+  const { user } = useAuthContext();
+
+  // redirect
+  useEffect(() => {
+    if (user && pathname === '/login') {
+      navigate('/');
+    }
+  }, [user, pathname, navigate]);
+
+  // formSubmit
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    login(email, password);
+  };
+
+  // reset form field
+  useEffect(() => {
+    if (!isPending) {
+      setEmail('');
+      setPassword('');
+    }
+  }, [isPending]);
+
+  return (
+    <form onSubmit={handleSubmit} className='auth-form'>
+      <h2>login</h2>
+      <label>
+        <span>email:</span>
+        <input
+          required
+          type='email'
+          onChange={(e) => setEmail(e.target.value)}
+          autoComplete='true'
+          value={email}
+        />
+      </label>
+      <label>
+        <span>password:</span>
+        <input
+          required
+          type='password'
+          onChange={(e) => setPassword(e.target.value)}
+          autoComplete='true'
+          value={password}
+        />
+      </label>
+      {!isPending && <button className='btn'>Log in</button>}
+      {isPending && (
+        <button className='btn' disabled>
+          loading
+        </button>
+      )}
+      {error && <div className='error'>{error}</div>}
+    </form>
+  );
+}

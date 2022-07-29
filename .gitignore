@@ -24,6 +24,3 @@ yarn-error.log*
 
 # firebase firestore
 /firebase
-.firebaserc
-firebase
-storage.rules
