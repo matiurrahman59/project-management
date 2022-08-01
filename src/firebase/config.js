@@ -8,6 +8,7 @@ import {
   getFirestore,
   serverTimestamp,
   setDoc,
+  updateDoc,
 } from 'firebase/firestore';
 
 import { getStorage } from 'firebase/storage';

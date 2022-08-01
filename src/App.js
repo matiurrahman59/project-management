@@ -4,22 +4,23 @@ import { useAuthContext } from './hooks/useAuthContext';
 import './App.css';
 
 // pages and component
-import Dashboard from './pages/dashboard';
-import Create from './pages/create';
-import Login from './pages/login';
-import Signup from './pages/signup';
-import Project from './pages/project';
+import Dashboard from './pages/dashboard/Dashboard';
+import Create from './pages/create/Create';
+import Login from './pages/login/Login';
+import Signup from './pages/signup/Signup';
+import Project from './pages/project/Projects';
 import Navbar from './component/Navbar';
 import Sidebar from './component/Sidebar';
 import RequireAuth from './component/RequireAuth';
+import OnlineUsers from './component/OnlineUsers';
 
 function App() {
-  const { authIsReady } = useAuthContext();
+  const { user, authIsReady } = useAuthContext();
   return (
     <div className='App'>
       {authIsReady && (
         <>
-          <Sidebar />
+          {user && <Sidebar />}
           <div className='container'>
             <Navbar />
             <Routes>
@@ -36,6 +37,7 @@ function App() {
               <Route path='*' element={<Navigate to='/login' />} />
             </Routes>
           </div>
+          {user && <OnlineUsers />}
         </>
       )}
     </div>

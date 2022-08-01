@@ -39,7 +39,6 @@ const SIgnup = () => {
   const handleFileChange = (e) => {
     setThumbnail(null);
     let selected = e.target.files[0];
-    console.log(selected);
     if (!selected) {
       setThumbnailError('Please select a file');
       return;
@@ -54,7 +53,6 @@ const SIgnup = () => {
     }
     setThumbnailError(null);
     setThumbnail(selected);
-    console.log('thumbnail updated');
   };
 
   useEffect(() => {
